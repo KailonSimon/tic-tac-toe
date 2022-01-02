@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+h1 {
+    color: #1d3557;
+}
+#game-container {
+    height: 100vh;
+    background-color: #f1faee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#gameboard-container {
+    height: 90vh;
+    width: 800px;
+    margin: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+.gameboard-item {
+    background-color: #a8dadc;
+    margin: 8px;
+    text-align: center;
+    padding-top: 15vh;
+    border-radius: 16px;
+}
+.gameboard-item:hover {
+    cursor: pointer;
+    box-shadow: 0 0 16px 2px #457b9d;
+}
+.selected {
+    background-color: #e63946;
+}
+.selected:hover {
+    cursor: default;
+}
