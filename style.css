@@ -2,11 +2,11 @@
     box-sizing: border-box;
 }
 h1 {
-    color: #1d3557;
+    color: #f77f00;
 }
-#game-container {
+#main-div {
     height: 100vh;
-    background-color: #f1faee;
+    background-color: #eae2b7;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,7 +20,7 @@ h1 {
     grid-template-rows: 1fr 1fr 1fr;
 }
 .gameboard-item {
-    background-color: #a8dadc;
+    background-color: #f77f00;
     margin: 8px;
     text-align: center;
     padding-top: 15vh;
@@ -28,11 +28,15 @@ h1 {
 }
 .gameboard-item:hover {
     cursor: pointer;
-    box-shadow: 0 0 16px 2px #457b9d;
+    box-shadow: 0 0 8px 1px #fcbf49;
 }
-.selected {
-    background-color: #e63946;
+.occupied-x {
+    background-color: #d62828;
 }
-.selected:hover {
+.occupied-o {
+    background-color: #003049;
+}
+.occupied:hover {
     cursor: default;
+    box-shadow: none;
 }
