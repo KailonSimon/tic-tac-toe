@@ -1,31 +1,35 @@
-const displayController = (() => {
-    let currentTurn =  'x';
+const gameboard = (() => { //View
     const gameboardContainer = document.createElement('div');
     const mainDiv = document.querySelector('#main-div');
     gameboardContainer.id = 'gameboard-container';
-    const gameboardItemValues = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    gameboardItemValues.forEach(value => {
-        gameboardContainer.insertAdjacentHTML('beforeend', `<div class='gameboard-item' data-index='${value}'></div>`)
-    });
-    mainDiv.appendChild(gameboardContainer);
-    const gameboardItems = document.querySelectorAll('.gameboard-item');
-    gameboardItems.forEach(item => {
-        item.addEventListener('click', e => {
-            item.classList.contains('occupied') ? 
-                console.log('square already occupied!')   
-                : (item.classList.add('occupied'),
-                item.classList.add(`occupied-${currentTurn}`),
-                item.textContent = `${currentTurn.toUpperCase()}`,
-                console.log(`Item ${item.dataset.index} selected by player ${currentTurn}`),
-                currentTurn == 'x' ? currentTurn = 'o' : currentTurn = 'x');
-            
-
-        });
-    });
-
+    for (let i = 0; i < 9; i++) { 
+        gameboardContainer.insertAdjacentHTML('beforeend', `<div class='gameboard-item'></div>`) //creates squares within gameboard
+    };
+    mainDiv.appendChild(gameboardContainer); //adds gameboard to main container
 })();
 
-const Player = () => {
-    const sayName = () => console.log(`my name is ${name}`);
-    return {sayName}
-}
+const displayController = (() => { //Controller
+    let currentTurn =  'x';
+    const gameboardItems = document.querySelectorAll('.gameboard-item'); //returns array of game squares
+    const gameboardItemValues = ['', '', '', '', '', '', '', '', '']; //array of square values; show if square is occupied
+    for (let i = 0; i < gameboardItems.length; i++) { //evaluates game state with each iteration; iteration count based on number of squares
+        gameboardItems[i].addEventListener('click', e => { //adds click event listener to each square
+            switch (gameboardItems[i].classList.contains('occupied')) { //evaluates if square has already been selected
+                case true: 
+                    console.log('square already occupied!');
+                    break;
+                case false: 
+                    gameboardItems[i].classList.add(`occupied`, `occupied-${currentTurn}`) //marks square as occupied
+                    gameboardItemValues[i] = currentTurn; //assigns player selection to gameboard value array
+                    console.log(gameboardItemValues);
+                    if (gameboardItemValues[0] == 'x' && gameboardItemValues[1] == 'x' && gameboardItemValues[2] == 'x') { //initial x player win state
+                        console.log(`${currentTurn} is the winner!`);
+                    } else {                
+                        currentTurn == 'x' ? currentTurn = 'o' : currentTurn = 'x'; //changes current player turn
+                    }
+                    break;
+            } 
+        })
+    }
+})();
+

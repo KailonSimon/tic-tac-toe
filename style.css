@@ -1,8 +1,10 @@
 * {
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 h1 {
     color: #f77f00;
+    font-size: 48px;
 }
 #main-div {
     height: 100vh;
@@ -20,7 +22,7 @@ h1 {
     grid-template-rows: 1fr 1fr 1fr;
 }
 .gameboard-item {
-    background-color: #f77f00;
+    background-color: #fcbf49;
     margin: 8px;
     text-align: center;
     padding-top: 15vh;
@@ -28,7 +30,7 @@ h1 {
 }
 .gameboard-item:hover {
     cursor: pointer;
-    box-shadow: 0 0 8px 1px #fcbf49;
+    box-shadow: 0 0 8px 1px #f77f00;
 }
 .occupied-x {
     background-color: #d62828;
@@ -40,3 +42,25 @@ h1 {
     cursor: default;
     box-shadow: none;
 }
+.occupied:active {
+    animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both;
+    perspective: 1000px;
+  }
+  
+  @keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+  
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+  
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
