@@ -1,5 +1,5 @@
 let gameOver = false;
-const gameboard = (() => { //View
+const gameboard = (() => {
     const gameboardContainer = document.createElement('div');
     const mainDiv = document.querySelector('#main-div');
     gameboardContainer.id = 'gameboard-container';
@@ -15,18 +15,23 @@ const gameboard = (() => { //View
         gameOverModal.classList.add('modal');
         const gameOverModalText = document.createElement('h2');
         gameOverModalText.textContent = `${winner.toUpperCase()} wins!`;
-        //gameOverModalText.classList.add(`${winner}-text`);
+        const resetButton = document.createElement('button');
+        resetButton.addEventListener('click', () => {
+            window.location.reload();
+        });
+        resetButton.textContent = 'Reset game';
+        resetButton.classList.add('reset-button');
         mainDiv.appendChild(gameOverModal);
         gameOverModal.append(gameOverModalText);
+        gameOverModal.append(resetButton);
     }
     mainDiv.appendChild(gameboardContainer); //adds gameboard to main container
     return {
         assignSquare,
-        endGame
+        endGame,
     }
 })();
-
-const gameModel = (() => { //Model/Data
+const gameController = (() => { 
     let currentTurn = 'x';
 
     const gameboardItemValues = ['', '', '', '', '', '', '', '', '']; //array of square values; show if square is occupied
@@ -43,7 +48,7 @@ const gameModel = (() => { //Model/Data
                 gameboard.endGame(currentTurn);
             }
         }
-        if (gameboardItemValues[4]) {
+        if (gameboardItemValues[4]) { //check diagonals
             if (gameboardItemValues[4] == gameboardItemValues[0] && gameboardItemValues[4] == gameboardItemValues[8]) {
                 gameOver = true;
                 gameboard.endGame(currentTurn);
@@ -64,16 +69,15 @@ const gameModel = (() => { //Model/Data
         }
     }
     return {
-        assignSquare
+        assignSquare,
     }
 })();
-
-const displayController = (() => { //Controller/UI
+const displayController = (() => {
     const gameboardItems = document.querySelectorAll('.gameboard-item');
     for (let i = 0; i < gameboardItems.length; i++) { //evaluates game state with each iteration; iteration count based on number of squares
-        gameboardItems[i].addEventListener('click', e => { //adds click event listener to each square
+        gameboardItems[i].addEventListener('click', () => { //adds click event listener to each square
             if (!gameOver) {
-                gameModel.assignSquare(i);
+                gameController.assignSquare(i);
             }
         });
     }
