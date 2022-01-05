@@ -14,7 +14,7 @@ const gameboard = (() => {
         const gameOverModal = document.createElement('div');
         gameOverModal.classList.add('modal');
         const gameOverModalText = document.createElement('h2');
-        gameOverModalText.textContent = `${winner.toUpperCase()} wins!`;
+        winner !== 'draw' ? gameOverModalText.textContent = `${winner.toUpperCase()} wins!` : gameOverModalText.textContent = "It's a draw!";
         const resetButton = document.createElement('button');
         resetButton.addEventListener('click', () => {
             window.location.reload();
@@ -52,10 +52,14 @@ const gameController = (() => {
             if (gameboardItemValues[4] == gameboardItemValues[0] && gameboardItemValues[4] == gameboardItemValues[8]) {
                 gameOver = true;
                 gameboard.endGame(currentTurn);
-            } else if (gameboardItemValues[4] == gameboardItemValues[2] && gameboardItemValues[4] == gameboardItemValues[4]) {
+            } else if (gameboardItemValues[4] == gameboardItemValues[2] && gameboardItemValues[4] == gameboardItemValues[6]) {
                 gameOver = true;
                 gameboard.endGame(currentTurn);
             }
+        }
+        if (gameboardItemValues.every(square => square !== '')) {
+            gameOver = true;
+            gameboard.endGame('draw');
         }
     }
     const assignSquare = (index) => {
