@@ -57,7 +57,7 @@ const gameController = (() => {
                 gameboard.endGame(currentTurn);
             }
         }
-        if (gameboardItemValues.every(square => square !== '')) {
+        if (gameboardItemValues.every(square => square !== '') && !gameOver) { //Check for draw
             gameOver = true;
             gameboard.endGame('draw');
         }
