@@ -24,7 +24,6 @@ const _evaluateBoard = (squares) => {
     return null;
 }
 
-
 const gameboardSlice = createSlice({
     name: 'gameboard',
     initialState: {
@@ -40,7 +39,11 @@ const gameboardSlice = createSlice({
             null,
             null,
         ],
-        winner: null
+        winner: null,
+        score: {
+            X: 0,
+            O: 0,
+        }
     },
     reducers: {
         assignSquare: (state, action) => {
@@ -59,6 +62,7 @@ const gameboardSlice = createSlice({
             switch (_evaluateBoard(state.squares)) {
                 case 'winner':
                     state.winner = (state.currentTurn[state.currentTurn.length - 2]);
+                    state.score[state.winner] += 1;
                     break;
                 case 'draw':
                     state.winner = 'draw'
