@@ -27,7 +27,7 @@ const _evaluateBoard = (squares) => {
 const gameboardSlice = createSlice({
     name: 'gameboard',
     initialState: {
-        currentTurn: [],
+        currentTurn: ['X'],
         squares: [
             null,
             null,
@@ -75,7 +75,7 @@ const gameboardSlice = createSlice({
         resetBoard: (state) => {
             state.squares.fill(null);
             state.winner = null;
-            state.currentTurn = [];
+            state.currentTurn = ['X'];
         }
     }
 })
