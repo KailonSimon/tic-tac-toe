@@ -2,8 +2,8 @@ import Gameboard from './components/Gameboard';
 import { createStyles } from '@mantine/core';
 
 const useStyles = createStyles(theme => ({
-  app: {
-    border: '1px solid green',
+  app: {  
+    padding: 16,
     height: '100vh',
     backgroundColor: theme.colors[theme.primaryColor][2],
     display: 'flex',

@@ -14,7 +14,7 @@ const useStyles = createStyles(theme => ({
         gridGap: '10px',
         
         [theme.fn.smallerThan('lg')]: {
-            width: '60%'
+            width: '45%'
         },
         [theme.fn.smallerThan('md')]: {
             width: '70%'
@@ -25,9 +25,10 @@ const useStyles = createStyles(theme => ({
     },
     
     modal: {
-        backgroundColor: theme.colors[theme.primaryColor][2],
-        filter: `drop-shadow(0 0 20px ${theme.colors[theme.primaryColor][6]})`,
-        fontWeight: 700
+        backgroundColor: theme.white,
+        filter: `drop-shadow(0 0 2px ${theme.colors[theme.primaryColor][6]})`,
+        fontWeight: 700,
+        color: theme.colors[theme.primaryColor][8]
     },
 
     modalHeader: {
@@ -39,7 +40,7 @@ const useStyles = createStyles(theme => ({
     },
     
     button: {
-        backgroundColor: theme.colors[theme.primaryColor][8]
+        backgroundColor: theme.colors[theme.primaryColor][9]
     },
 
 }))
