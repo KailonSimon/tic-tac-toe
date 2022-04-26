@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { useSelector, useDispatch } from 'react-redux';
 import { assignSquare } from "../features/redux/gameboardSlice";
 import { createStyles } from "@mantine/core";
+import { shake } from "./Gameboard";
 
 const useStyles = createStyles(theme => ({
     gameboardSquare: {
@@ -27,7 +28,7 @@ const useStyles = createStyles(theme => ({
         },
 
         '&:active': {
-            animation: 'shake 0.6s cubic-bezier(.36,.07,.19,.97) both',
+            animation: `${shake} 0.6s cubic-bezier(.36,.07,.19,.97) both`,
             perspective: '1000px'
         }
     },
@@ -44,7 +45,7 @@ const useStyles = createStyles(theme => ({
         },
         
         '&:active': {
-            animation: 'shake 0.6s cubic-bezier(.36,.07,.19,.97) both',
+            animation: `${shake} 0.6s cubic-bezier(.36,.07,.19,.97) both`,
             perspective: '1000px'
         }
     },

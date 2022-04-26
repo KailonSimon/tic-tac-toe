@@ -43,7 +43,7 @@ const gameboardSlice = createSlice({
         score: {
             X: 0,
             O: 0,
-        }
+        },
     },
     reducers: {
         assignSquare: (state, action) => {
@@ -72,14 +72,19 @@ const gameboardSlice = createSlice({
             }   
 
         },
+        setWinner: (state) => {
+            state.winner = state.currentTurn[state.currentTurn.length - 2];
+            state.score[state.winner] += 1;
+        },
         resetBoard: (state) => {
             state.squares.fill(null);
             state.winner = null;
             state.currentTurn = ['X'];
-        }
+        },
+
     }
 })
 
-export const { assignSquare, resetBoard } = gameboardSlice.actions;
+export const { assignSquare, resetBoard, setWinner } = gameboardSlice.actions;
 
 export default gameboardSlice.reducer;

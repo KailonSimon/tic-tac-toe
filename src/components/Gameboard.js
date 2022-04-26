@@ -1,8 +1,27 @@
 import GameboardSquare from "./GameboardSquare";
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from "react";
-import { resetBoard } from "../features/redux/gameboardSlice";
-import { Box, Button, createStyles, Group, Modal, Text, Title } from "@mantine/core";
+import { resetBoard, setWinner } from "../features/redux/gameboardSlice";
+import { Box, Button, createStyles, keyframes, Group, Modal, Text, } from "@mantine/core";
+import { useInterval } from "../features/hooks/useInterval";
+
+export const shake = keyframes({
+    '10%, 90%': {
+        transform: 'translate3d(-1px, 0, 0)'
+    },
+
+    '20%, 80%': {
+        transform: 'translate3d(2px, 0, 0)'
+    },
+
+    '30%, 50%, 70%': {
+        transform: 'translate3d(-4px, 0, 0)'
+    },
+
+    '40%, 60%': {
+        transform: 'translate3d(4px, 0, 0)'
+    }
+})
 
 const useStyles = createStyles(theme => ({
     gameboardContainer: {
@@ -12,7 +31,7 @@ const useStyles = createStyles(theme => ({
         gridTemplateColumns: '1fr 1fr 1fr',
         gridTemplateRows: '1fr 1fr 1fr',
         gridGap: '10px',
-        
+
         [theme.fn.smallerThan('lg')]: {
             width: '45%'
         },
@@ -23,7 +42,13 @@ const useStyles = createStyles(theme => ({
             width: '80%'
         },
     },
-    
+
+    timer: {
+        animation: `${shake} 0.6s cubic-bezier(.36,.07,.19,.97) both`,
+        perspective: '1000px'
+
+    },
+
     modal: {
         backgroundColor: theme.white,
         filter: `drop-shadow(0 0 2px ${theme.colors[theme.primaryColor][6]})`,
@@ -38,7 +63,7 @@ const useStyles = createStyles(theme => ({
     modalTitle: {
         fontSize: 24
     },
-    
+
     button: {
         backgroundColor: theme.colors[theme.primaryColor][9]
     },
@@ -46,17 +71,32 @@ const useStyles = createStyles(theme => ({
 }))
 
 
+
 export default function Gameboard() {
-    const { winner, score, currentTurn } = useSelector(state => state.gameboard)
+    const { winner, score, currentTurn, numberOfRounds, currentRound } = useSelector(state => state.gameboard);
     const { classes } = useStyles();
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
+    const [timeRemaining, setTimeRemaining] = useState(15);
+    useInterval(() => {
+        if (currentTurn.length - 1 && timeRemaining && !winner) {
+            setTimeRemaining(timeRemaining - 1)
+        }
+    }, 1000);
 
     useEffect(() => {
+        setTimeRemaining(15);
         if (winner) {
             setOpen(true);
         }
-    }, [winner])
+
+    }, [winner, currentTurn]);
+
+    useEffect(() => {
+        if (!timeRemaining) {
+            dispatch(setWinner())
+        }
+    }, [dispatch, timeRemaining]);
 
     return (
         <>
@@ -73,6 +113,9 @@ export default function Gameboard() {
                 <Text size='lg' weight={700}>
                     Current Turn: {currentTurn[currentTurn.length - 1]}
                 </Text>
+                { !winner && <Text size='lg' weight={700} color={timeRemaining >= 10 ? 'black' : 'red'}>
+                    Time Remaining: {timeRemaining}
+                </Text> }
             </Box>
             <div className={classes.gameboardContainer}>
                 <GameboardSquare position={0} />
