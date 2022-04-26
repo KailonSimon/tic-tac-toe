@@ -77,15 +77,16 @@ export default function Gameboard() {
     const { classes } = useStyles();
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
-    const [timeRemaining, setTimeRemaining] = useState(15);
+    const turnTime = 15
+    const [timeRemaining, setTimeRemaining] = useState(turnTime);
     useInterval(() => {
         if (currentTurn.length - 1 && timeRemaining && !winner) {
-            setTimeRemaining(timeRemaining - 1)
+            setTimeRemaining((timeRemaining - .1).toFixed(1))
         }
-    }, 1000);
+    }, 100);
 
     useEffect(() => {
-        setTimeRemaining(15);
+        setTimeRemaining(turnTime);
         if (winner) {
             setOpen(true);
         }
@@ -93,7 +94,7 @@ export default function Gameboard() {
     }, [winner, currentTurn]);
 
     useEffect(() => {
-        if (!timeRemaining) {
+        if (timeRemaining === '0.0') {
             dispatch(setWinner())
         }
     }, [dispatch, timeRemaining]);
